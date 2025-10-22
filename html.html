@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>My Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #1f1f1f, #2e2e2e, #444);
+      color: #ffffff;
+      line-height: 1.6;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: rgba(27, 27, 27, 0.85);
+      backdrop-filter: blur(6px);
+      border-top: 2px solid #00adb5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-container img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00adb5;
+    }
+
+    .logo-container h1 {
+      font-size: 22px;
+      margin: 0;
+      color: #00adb5;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      left: 0;
+      bottom: -3px;
+      background: #00adb5;
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: #00adb5;
+    }
+
+    /* HAMBURGER MENU */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      background: #00adb5;
+      height: 3px;
+      width: 25px;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background: rgba(17,17,17,0.95);
+        width: 100%;
+        text-align: center;
+        border-top: 2px solid #00adb5;
+        animation: slideDown 0.4s ease forwards;
+      }
+
+      nav.show {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav a {
+        margin: 15px 0;
+        font-size: 18px;
+      }
+    }
+
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HERO SECTION */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 50px;
+      flex-wrap: wrap;
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      text-align: center;
+      animation: fadeSlide 1s ease-out both;
+    }
+
+    .hero img {
+      width: 350px;
+      border-radius: 10px;
+      margin-right: 40px;
+      box-shadow: 0 0 20px rgba(0,173,181,0.4);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .hero img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0,173,181,0.6);
+    }
+
+    .hero-text h2 {
+      font-size: 60px;
+      margin: 0;
+      color: #00adb5;
+    }
+
+    .hero-text p {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #cccccc;
+      max-width: 600px;
+    }
+
+    section {
+      padding: 80px 50px;
+      text-align: center;
+      min-height: 100vh;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    section:nth-of-type(2) { animation-delay: 0.4s; }
+    section:nth-of-type(3) { animation-delay: 0.8s; }
+    section:nth-of-type(4) { animation-delay: 1.2s; }
+
+    h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00adb5;
+      text-shadow: 0 0 10px rgba(0,173,181,0.6);
+    }
+
+    p {
+      max-width: 700px;
+      margin: auto;
+      font-size: 17px;
+      color: #dddddd;
+    }
+
+    /* ABOUT SECTION */
+    #about {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+    }
+
+    .about-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .about-image img {
+      width: 320px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,173,181,0.4);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .about-image img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0,173,181,0.6);
+    }
+
+    .about-text {
+      max-width: 550px;
+      text-align: left;
+      color: #ddd;
+    }
+
+    .about-text p {
+      margin-bottom: 15px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .about-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .about-image img {
+        width: 80%;
+        margin-bottom: 20px;
+      }
+
+      .about-text {
+        text-align: center;
+      }
+    }
+
+    /* SKILLS */
+    #skills {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+    }
+
+    .skills-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .skill-card {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      border-radius: 10px;
+      padding: 20px;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0,173,181,0.6);
+    }
+
+    .skill-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 2px solid #00adb5;
+    }
+
+    /* TESTIMONIALS */
+    #testimonials {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+    }
+
+    .testimonials-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .testimonial-card {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      border-radius: 15px;
+      padding: 25px;
+      width: 280px;
+      text-align: left;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 25px rgba(0,173,181,0.6);
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .testimonial-card h4 {
+      color: #00adb5;
+      font-weight: normal;
+    }
+
+    /* CONTACT */
+    #contact {
+      text-align: center;
+      padding: 100px 30px;
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+    }
+
+    .contact-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      border-radius: 12px;
+      width: 250px;
+      padding: 25px 20px;
+      text-align: center;
+      color: #eee;
+      transition: all 0.4s ease;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+
+    .contact-card img {
+      width: 50px;
+      height: 50px;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 6px #00adb5);
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .contact-card p {
+      margin: 5px 0;
+      font-weight: bold;
+      color: #00adb5;
+    }
+
+    .contact-card span {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 25px rgba(0,173,181,0.6);
+      border-color: #00adb5;
+    }
+
+    .contact-card:hover img {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 10px #00adb5);
+    }
+
+    footer {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #aaa;
+      animation: fadeSlide 1.5s ease-out both;
+    }
+
+    footer p span {
+      color: #00adb5;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeSlide {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-container">
+      <img src="logo.jpg" alt="My Logo">
+      <h1>Layag, John Ivan</h1>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav id="navbar">
+      <a href="#home">Home</a>
+      <a href="#about">About Me</a>
+      <a href="#skills">Skills</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <img src="me.jpg" alt="Profile Photo">
+    <div class="hero-text">
+      <h2>My<br>Portfolio</h2>
+      <p>Hi, I'm <strong>John Ivan Layag</strong>. Welcome to my portfolio — where creativity meets code!</p>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-container">
+      <div class="about-image">
+        <img src="about.jpg" alt="About Image">
+      </div>
+      <div class="about-text">
+        <p>Hi! I’m <strong>John Ivan Layag</strong>, a BSIT student passionate about design, coding, and technology.
+        I love transforming creative ideas into smooth, responsive, and visually appealing websites.</p>
+        <p>When I’m not coding, I enjoy playing billiards, exploring design tools, and learning ways to make
+        digital experiences more engaging. My goal is to merge logic and creativity to build meaningful web solutions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>My Skills</h2>
+    <div class="skills-container">
+      <div class="skill-card">
+        <img src="skill1.jpg" alt="HTML">
+        <p>HTML</p>
+      </div>
+      <div class="skill-card">
+        <img src="skill2.jpg" alt="CSS">
+        <p>CSS</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials">
+    <h2>Testimonials</h2>
+    <div class="testimonials-container">
+      <div class="testimonial-card">
+        <p>"Ivan is an exceptional developer! His attention to detail elevated our project."</p>
+        <h4>- Sarah Nabarang</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>"Working with Ivan was smooth and creative. He’s very professional and efficient."</p>
+        <h4>- Mezugat Fukiko</h4>
+      </div>
+      <div class="testimonial-card">
+        <p>"Highly recommended! Ivan’s designs are modern, clean, and responsive."</p>
+        <h4>- Jipriy Plapla</h4>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <div class="contact-container">
+      <a href="mailto:johnivanlayag@email.com" class="contact-card">
+        <img src="gmail.png" alt="Gmail">
+        <p>Email Me</p>
+        <span>johnivanlayag@email.com</span>
+      </a>
+      <a href="https://fb.com/ivan" target="_blank" class="contact-card">
+        <img src="facebook.png" alt="Facebook">
+        <p>Facebook</p>
+        <span>fb.com/ivan</span>
+      </a>
+      <a href="https://onlyfans.com/ivan" target="_blank" class="contact-card">
+        <img src="onlyfans.png" alt="OnlyFans">
+        <p>OnlyFans</p>
+        <span>onlyfans.com/ivan</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 <span>John Ivan Layag</span>. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const navbar = document.getElementById('navbar');
+    const navLinks = document.querySelectorAll('nav a');
+
+    // Toggle menu open/close
+    toggle.addEventListener('click', () => {
+      navbar.classList.toggle('show');
+      toggle.classList.toggle('active');
+    });
+
+    // Auto-close when link clicked (mobile)
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navbar.classList.remove('show');
+          toggle.classList.remove('active');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
