@@ -17,8 +17,20 @@
     }
 
     header {
-      background: rgba(27, 27, 27, 0.85);
-      backdrop-filter: blur(6px);
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 30px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+     header {
+      background: linear-gradient(145deg, #1b1b1b, #252525);
       border-top: 2px solid #00adb5;
       display: flex;
       justify-content: space-between;
@@ -48,11 +60,61 @@
       color: #00adb5;
     }
 
+    /* PURE CSS MOBILE MENU */
+    #menu-toggle {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      width: 30px;
+      height: 24px;
+      justify-content: space-between;
+      z-index: 1002;
+    }
+
+    .menu-toggle span {
+      background: #00adb5;
+      height: 3px;
+      width: 100%;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Hamburger animation */
+    #menu-toggle:checked + .menu-toggle span:nth-child(1) {
+      transform: rotate(45deg) translateY(8px);
+    }
+    #menu-toggle:checked + .menu-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+    #menu-toggle:checked + .menu-toggle span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-8px);
+    }
+
     nav {
       display: flex;
-      align-items: center;
+      flex-direction: row;
       gap: 15px;
-      transition: all 0.3s ease;
+    }
+
+    /* MOBILE FULLSCREEN NAV */
+    #menu-toggle:checked ~ nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: rgba(17, 17, 17, 0.95);
+      transform: translateY(0);
+      opacity: 1;
+      z-index: 1001;
+      transition: all 0.4s ease;
     }
 
     nav a {
@@ -82,70 +144,19 @@
       color: #00adb5;
     }
 
-    /* HAMBURGER MENU */
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
+    /* AUTO-CLOSE MOBILE MENU WHEN LINK CLICKED */
+    nav a {
+      counter-reset: menu-close;
+    }
+    nav a:active {
+      counter-increment: menu-close;
     }
 
-    .menu-toggle span {
-      background: #00adb5;
-      height: 3px;
-      width: 25px;
-      margin: 4px 0;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-
-    .menu-toggle.active span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-        flex-direction: column;
-        background: rgba(17,17,17,0.95);
-        width: 100%;
-        text-align: center;
-        border-top: 2px solid #00adb5;
-        animation: slideDown 0.4s ease forwards;
-      }
-
-      nav.show {
-        display: flex;
-      }
-
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav a {
-        margin: 15px 0;
-        font-size: 18px;
-      }
-    }
-
-    @keyframes slideDown {
-      0% { opacity: 0; transform: translateY(-10px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-
-    /* HERO SECTION */
     .hero {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 80px 50px;
+      padding: 50px;
       flex-wrap: wrap;
       background: linear-gradient(145deg, #1b1b1b, #252525);
       border-top: 2px solid #00adb5;
@@ -206,7 +217,73 @@
       color: #dddddd;
     }
 
-    /* ABOUT SECTION */
+    /* HERO SECTION */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px;
+      flex-wrap: wrap;
+      background: linear-gradient(145deg, #1b1b1b, #252525);
+      border-top: 2px solid #00adb5;
+      text-align: center;
+      animation: fadeSlide 1s ease-out both;
+    }
+
+    .hero img {
+      width: 350px;
+      border-radius: 10px;
+      margin-right: 40px;
+      box-shadow: 0 0 20px rgba(0,173,181,0.4);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .hero img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0,173,181,0.6);
+    }
+
+    .hero-text h2 {
+      font-size: 60px;
+      margin: 0;
+      color: #00adb5;
+    }
+
+    .hero-text p {
+      margin-top: 15px;
+      font-size: 16px;
+      color: #cccccc;
+      max-width: 600px;
+    }
+
+    section {
+      padding: 80px 50px;
+      text-align: center;
+      min-height: 100vh;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    section:nth-of-type(2) { animation-delay: 0.4s; }
+    section:nth-of-type(3) { animation-delay: 0.8s; }
+    section:nth-of-type(4) { animation-delay: 1.2s; }
+
+    h2 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: #00adb5;
+      text-shadow: 0 0 10px rgba(0,173,181,0.6);
+    }
+
+    p {
+      max-width: 700px;
+      margin: auto;
+      font-size: 17px;
+      color: #dddddd;
+    }
+
+    /* ABOUT */
     #about {
       background: linear-gradient(145deg, #1b1b1b, #252525);
       border-top: 2px solid #00adb5;
@@ -223,6 +300,8 @@
 
     .about-image img {
       width: 320px;
+      height: auto;
+      max-width: 100%;
       border-radius: 15px;
       box-shadow: 0 0 25px rgba(0,173,181,0.4);
       transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -241,23 +320,8 @@
 
     .about-text p {
       margin-bottom: 15px;
+      font-size: 17px;
       line-height: 1.7;
-    }
-
-    @media (max-width: 768px) {
-      .about-container {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .about-image img {
-        width: 80%;
-        margin-bottom: 20px;
-      }
-
-      .about-text {
-        text-align: center;
-      }
     }
 
     /* SKILLS */
@@ -346,6 +410,7 @@
       padding: 100px 30px;
       background: linear-gradient(145deg, #1b1b1b, #252525);
       border-top: 2px solid #00adb5;
+      animation: fadeUp 1.2s ease forwards;
     }
 
     .contact-container {
@@ -363,6 +428,7 @@
       width: 250px;
       padding: 25px 20px;
       text-align: center;
+      text-decoration: none;
       color: #eee;
       transition: all 0.4s ease;
       box-shadow: 0 0 10px rgba(0,0,0,0.6);
@@ -422,6 +488,72 @@
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      header {
+        justify-content: space-between;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      nav {
+        display: none;
+        flex-direction: column;
+        background: rgba(17,17,17,0.95);
+        width: 100%;
+        text-align: center;
+        border-top: 2px solid #00adb5;
+      }
+
+      #menu-toggle:checked ~ nav {
+        display: flex;
+        animation: slideDown 0.4s ease forwards;
+      }
+
+      nav a {
+        margin: 15px 0;
+        font-size: 18px;
+      }
+
+      .hero {
+        flex-direction: column;
+      }
+
+      .hero img {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .skill-card, .testimonial-card {
+        width: 90%;
+      }
+
+      .about-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .about-image img {
+        width: 80%;
+        margin-bottom: 20px;
+      }
+
+      .about-text {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav a { display: block; margin: 10px 0; }
+    }
+
+    @keyframes slideDown {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -432,19 +564,23 @@
       <h1>Layag, John Ivan</h1>
     </div>
 
-    <div class="menu-toggle" id="menu-toggle">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+<!-- Replace your nav and toggle part with this -->
 
-    <nav id="navbar">
-      <a href="#home">Home</a>
-      <a href="#about">About Me</a>
-      <a href="#skills">Skills</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<input type="checkbox" id="menu-toggle" />
+<label for="menu-toggle" class="menu-toggle">
+  <span></span>
+  <span></span>
+  <span></span>
+</label>
+
+<nav>
+  <a href="#home" onclick="document.getElementById('menu-toggle').checked = false;">Home</a>
+  <a href="#about" onclick="document.getElementById('menu-toggle').checked = false;">About Me</a>
+  <a href="#skills" onclick="document.getElementById('menu-toggle').checked = false;">Skills</a>
+  <a href="#testimonials" onclick="document.getElementById('menu-toggle').checked = false;">Testimonials</a>
+  <a href="#contact" onclick="document.getElementById('menu-toggle').checked = false;">Contact</a>
+</nav>
+
   </header>
 
   <section id="home" class="hero">
@@ -526,28 +662,6 @@
   <footer>
     <p>© 2025 <span>John Ivan Layag</span>. All rights reserved.</p>
   </footer>
-
-  <script>
-    const toggle = document.getElementById('menu-toggle');
-    const navbar = document.getElementById('navbar');
-    const navLinks = document.querySelectorAll('nav a');
-
-    // Toggle menu open/close
-    toggle.addEventListener('click', () => {
-      navbar.classList.toggle('show');
-      toggle.classList.toggle('active');
-    });
-
-    // Auto-close when link clicked (mobile)
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
-          navbar.classList.remove('show');
-          toggle.classList.remove('active');
-        }
-      });
-    });
-  </script>
 
 </body>
 </html>
